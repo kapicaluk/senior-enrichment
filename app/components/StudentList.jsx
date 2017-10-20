@@ -49,7 +49,10 @@ export default class StudentList extends Component {
                         <td>{ student.id }</td>
                         <td>{ student.name }</td>
                         <td>{ student.campus.name }</td>
-                        <td><RemoveStudent toBeDeleted={student.id} /></td>
+                        <td>
+
+                        <RemoveStudent toBeDeleted={student.id} /></td>
+                      
                         <td>
                           <Link to={`/editStudent/${ student.id }`} >
                             <button className="btn btn-default"><span className="glyphicon glyphicon-pencil" /></button>

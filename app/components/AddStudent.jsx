@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import axios from 'axios';
 
 export default class AddStudent extends Component {
@@ -8,7 +9,8 @@ export default class AddStudent extends Component {
       campuses: [],
       studentName: '',
       studentEmail: '',
-      selectedCampus: ''
+      selectedCampus: '',
+      fireRedirect: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,6 +26,7 @@ export default class AddStudent extends Component {
   handleChange(evt) {
     const value = evt.target.value;
     const name = evt.target.name;
+    console.log(name)
 
     this.setState({
       [name]: value
@@ -33,6 +36,7 @@ export default class AddStudent extends Component {
   handleSubmit (evt) {
     axios.post('/api/students', { name: this.state.studentName, email: this.state.studentEmail, campusId: this.state.selectedCampus })
       .then(res => res.data)
+      .then(this.setState({fireRedirect: true}))
     evt.preventDefault();
   }
 
@@ -43,7 +47,6 @@ export default class AddStudent extends Component {
         <br />
         <div className="input-group input-group-lg">
         <form onSubmit={ this.handleSubmit }>
-        {/* <input type="hidden" name="redirect" value="/students" /> */}
           <h1> Add Student </h1>
           <br />
           Student Name: <br />
@@ -65,6 +68,10 @@ export default class AddStudent extends Component {
           <button className="btn btn-success" type="submit" value="submit">Submit</button>
         </form>
         </div>
+         {this.state.fireRedirect && (
+          <Redirect to="/students" />
+        )}
+
       </div>
     );
   }
