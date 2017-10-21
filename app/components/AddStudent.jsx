@@ -26,8 +26,6 @@ export default class AddStudent extends Component {
   handleChange(evt) {
     const value = evt.target.value;
     const name = evt.target.name;
-    console.log(name)
-
     this.setState({
       [name]: value
     });
@@ -36,7 +34,7 @@ export default class AddStudent extends Component {
   handleSubmit (evt) {
     axios.post('/api/students', { name: this.state.studentName, email: this.state.studentEmail, campusId: this.state.selectedCampus })
       .then(res => res.data)
-      .then(this.setState({fireRedirect: true}))
+      .then(() => this.setState({fireRedirect: true}))
     evt.preventDefault();
   }
 
